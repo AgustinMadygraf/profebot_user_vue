@@ -3,7 +3,7 @@ Path: src/App.vue
 -->
 
 <template>
-  <div id="app">
+  <div>
     <ChatBot />
   </div>
 </template>
