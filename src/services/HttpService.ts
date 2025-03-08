@@ -6,7 +6,7 @@ export default class HttpService {
     private apiUrl: string;
   
     constructor() {
-        this.apiUrl = "http://localhost/profebot_user_vue/profebot_user_php";
+        this.apiUrl = "http://localhost/profebot_user_vue/public/profebot_user_php";
     }
   
     async sendMessage(message: string): Promise<any> {
