@@ -37,3 +37,7 @@ npm run build
 ```sh
 npm run lint
 ```
+
+## Integración con Backend
+
+Para integrar el proyecto con el backend, por favor consulta el documento en [docs/backend_integration.md](docs/backend_integration.md).

@@ -5,9 +5,7 @@ Path: src/components/ChatBot.vue
 <template>
   <div class="chat-container">
     <!-- Botón que aparece solo si detecta Telegram -->
-    <button v-if="telegramService.hasTelegram()" @click="openTelegram">
-      Abrir Telegram
-    </button>
+    <button v-if="telegramService.hasTelegram()" @click="openTelegram">Abrir Telegram</button>
 
     <!-- Chat embebido si NO detecta Telegram -->
     <div v-else class="chat-box">
@@ -16,7 +14,7 @@ Path: src/components/ChatBot.vue
           {{ msg }}
         </div>
       </div>
-      <input v-model="newMessage" placeholder="Escribe tu mensaje..." @keyup.enter="sendMessage">
+      <input v-model="newMessage" placeholder="Escribe tu mensaje..." @keyup.enter="sendMessage" />
       <button @click="sendMessage">Enviar</button>
     </div>
   </div>
@@ -36,16 +34,23 @@ export default {
     const httpService = new HttpService()
 
     const openTelegram = () => {
-      window.location.href = "https://t.me/madygraf_bot"
+      window.location.href = 'https://t.me/madygraf_bot'
     }
 
     const sendMessage = async () => {
       if (newMessage.value.trim() !== '') {
+        console.log('ChatBot: Preparing to send message:', newMessage.value)
         messages.value.push(`Tú: ${newMessage.value}`)
         try {
           const response = await httpService.sendMessage(newMessage.value)
-          messages.value.push(`Bot: ${response.reply}`)
-        } catch (error) {
+          console.log('ChatBot: Received response from HttpService:', response)
+          if (response.success) {
+            messages.value.push(`Bot: ${response.reply}`)
+          } else {
+            messages.value.push(`Bot: ${response.error || 'No se recibió respuesta'}`)
+          }
+        } catch {
+          console.error('ChatBot: Error in sending message.')
           messages.value.push('Error al enviar mensaje.')
         }
         newMessage.value = ''
@@ -57,8 +62,8 @@ export default {
       newMessage,
       openTelegram,
       sendMessage,
-      telegramService
+      telegramService,
     }
-  }
+  },
 }
 </script>
