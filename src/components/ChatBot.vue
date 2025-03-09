@@ -34,7 +34,9 @@ export default {
     const httpService = new HttpService()
 
     const openTelegram = () => {
-      window.location.href = 'https://t.me/madygraf_bot'
+      // Usa la variable de entorno, con fallback si no está configurada
+      const botUrl = import.meta.env.VITE_TELEGRAM_BOT_URL || 'https://tu.telegram.bot.url'
+      window.location.replace(botUrl)
     }
 
     const sendMessage = async () => {
