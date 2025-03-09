@@ -49,8 +49,8 @@ export default {
           } else {
             messages.value.push(`Bot: ${response.error || 'No se recibió respuesta'}`)
           }
-        } catch {
-          console.error('ChatBot: Error in sending message.')
+        } catch (error) {
+          console.error('ChatBot: Error in sending message:', error)
           messages.value.push('Error al enviar mensaje.')
         }
         newMessage.value = ''

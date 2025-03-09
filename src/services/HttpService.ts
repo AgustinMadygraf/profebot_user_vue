@@ -22,15 +22,37 @@ export default class HttpService {
         body: JSON.stringify({ message }),
       })
       console.log('HttpService: Received raw response:', response)
+      console.log('HttpService: Response headers:', [...response.headers.entries()])
+
+      const responseText = await response.text()
+      console.log('HttpService: Raw response text:', responseText)
+
       if (!response.ok) {
-        throw new Error(`Error al enviar mensaje: ${response.statusText}`)
+        const errorMsg = `Error al enviar mensaje: ${response.status} ${response.statusText}. Response: ${responseText}`
+        throw new Error(errorMsg)
       }
-      const jsonResponse = await response.json()
+
+      let jsonResponse
+      try {
+        jsonResponse = JSON.parse(responseText)
+      } catch (jsonError) {
+        const err = jsonError as Error
+        console.error('HttpService: Error parsing JSON:', err.message, 'Stack:', err.stack)
+        console.error('HttpService: Response text causing error:', responseText)
+        throw err
+      }
+
       console.log('HttpService: sendMessage response json:', jsonResponse)
       return jsonResponse
     } catch (error) {
-      console.error('HttpService: Caught error during sendMessage:', error)
-      throw error
+      const err = error as Error
+      console.error(
+        'HttpService: Caught error during sendMessage:',
+        err.message,
+        'Stack:',
+        err.stack,
+      )
+      throw err
     }
   }
 }
