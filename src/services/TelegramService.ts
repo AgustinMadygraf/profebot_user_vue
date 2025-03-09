@@ -7,12 +7,11 @@ export default class TelegramService {
 
   constructor() {
     this.userAgent = navigator.userAgent.toLowerCase()
-    console.log('TelegramService inicializado. UserAgent:', this.userAgent)
+    const hasTelegram = this.userAgent.includes('telegram')
+    console.log('TelegramService: inicializado. hasTelegram:', hasTelegram)
   }
 
   hasTelegram(): boolean {
-    const result = this.userAgent.includes('telegram')
-    console.log('Verificando presencia de Telegram en UserAgent:', result)
-    return result
+    return this.userAgent.includes('telegram')
   }
 }

@@ -39,18 +39,16 @@ export default {
 
     const sendMessage = async () => {
       if (newMessage.value.trim() !== '') {
-        console.log('ChatBot: Preparing to send message:', newMessage.value)
         messages.value.push(`Tú: ${newMessage.value}`)
         try {
           const response = await httpService.sendMessage(newMessage.value)
-          console.log('ChatBot: Received response from HttpService:', response)
           if (response.success) {
             messages.value.push(`Bot: ${response.reply}`)
           } else {
             messages.value.push(`Bot: ${response.error || 'No se recibió respuesta'}`)
           }
         } catch (error) {
-          console.error('ChatBot: Error in sending message:', error)
+          console.error('ChatBot: Error sending message:', (error as Error).message)
           messages.value.push('Error al enviar mensaje.')
         }
         newMessage.value = ''
