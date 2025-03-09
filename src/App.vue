@@ -8,14 +8,14 @@ Path: src/App.vue
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import ChatBot from './components/ChatBot.vue'
 
 export default {
   name: 'App',
   components: {
-    ChatBot
-  }
+    ChatBot,
+  },
 }
 </script>
 
